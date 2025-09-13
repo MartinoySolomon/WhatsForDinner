@@ -20,7 +20,13 @@ A responsive web app that helps you decide what to cook for dinner based on your
     vite.config.ts
     /public
     /src
+      /components
+      /context
+      /hooks
+      /screens
       /assets
+      /utils
+      /api
       App.css
       App.tsx
       index.css
