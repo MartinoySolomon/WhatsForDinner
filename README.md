@@ -108,16 +108,13 @@ git push --set-upstream origin your-branch-name
 
    cd frontend
 
-   ```
-
-   ```
-
 2. Install dependencies:
    ```
    npm install
    ```
 3. Start the development server:
    ```
+
    npm run dev
    ```
 
@@ -138,7 +135,6 @@ https://whatsfordinner-m0d2.onrender.com
   ```
   https://whatsfordinner-m0d2.onrender.com/api/recipe
   ```
-
 ---
 
 ## Contribution Guidelines
