@@ -105,25 +105,39 @@ git push --set-upstream origin your-branch-name
 ### Frontend
 
 1. Navigate to the frontend folder:
-   ```sh
+
    cd frontend
+
    ```
+
+   ```
+
 2. Install dependencies:
-   ```sh
+   ```
    npm install
    ```
 3. Start the development server:
-   ```sh
+   ```
    npm run dev
    ```
 
 ### Backend
 
-1. Navigate to the backend folder:
-   ```sh
-   cd backend
-   ```
-2. (Setup instructions will be added after backend initialization)
+**The backend is already deployed and running on Render.**
+
+**Backend API base URL:**
+
+```
+https://whatsfordinner-m0d2.onrender.com
+```
+
+**How to use:**
+
+- You do NOT need to run the backend locally.
+- All frontend API requests should use:
+  ```
+  https://whatsfordinner-m0d2.onrender.com/api/recipe
+  ```
 
 ---
 
