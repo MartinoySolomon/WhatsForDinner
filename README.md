@@ -178,3 +178,31 @@ https://whatsfordinner-m0d2.onrender.com
 ## Contact
 
 For questions, contact the repository admin or open an issue on GitHub.
+
+---
+
+## Fetching Food Images
+
+To get an image of a food dish, use the following API endpoint:
+
+```
+GET https://whatsfordinner-m0d2.onrender.com/api/image?dish={dish-name}
+```
+
+Replace `{dish-name}` with the name of the food you want an image for (e.g., `pizza`, `sushi`, `pasta`).
+
+**Example:**
+
+```
+GET https://whatsfordinner-m0d2.onrender.com/api/image?dish=pizza
+```
+
+**Response:**
+
+```
+{
+  "imageUrl": "https://images.unsplash.com/photo-..."
+}
+```
+
+You can use the `imageUrl` in your frontend to display the image.
