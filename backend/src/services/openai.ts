@@ -1,10 +1,10 @@
 import OpenAI from "openai";
 
 interface RecipeInput {
-	skill: string;
-	taste: string;
+	skill: number;
+	taste: number;
 	cuisine: string;
-	time: string;
+	time: number;
 }
 
 export async function generateRecipe({
@@ -21,7 +21,7 @@ export async function generateRecipe({
 	// Build the prompt for OpenAI
 	const prompt = `Suggest a dinner recipe based on these preferences:\n
 Skill level: ${skill}\nTaste vs Nutrition: ${taste}\nCuisine: ${cuisine}\nTime available: ${time} minutes\n
-Return a JSON object with the following fields: name, description, ingredients (array), instructions (array), and a short summary.`;
+Return a JSON object with the following fields: name, description, ingredients (array of objects with name and quantity), instructions (array), cuisine, prep time (number) in minutes, cook time (number) in minutes, skill level.`;
 
 	const response = await openai.chat.completions.create({
 		model: "gpt-3.5-turbo",

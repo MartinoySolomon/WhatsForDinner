@@ -10,6 +10,7 @@ imageRouter.get("/", async (req, res) => {
 		return res.status(400).json({ error: "Missing 'dish' query parameter." });
 	}
 	try {
+		console.log("UNSPLASH_ACCESS_KEY:", process.env.UNSPLASH_ACCESS_KEY);
 		const response = await axios.get("https://api.unsplash.com/search/photos", {
 			params: {
 				query: dish,
@@ -26,9 +27,23 @@ imageRouter.get("/", async (req, res) => {
 		} else {
 			return res.status(404).json({ error: "No image found for this dish." });
 		}
-	} catch (error) {
-		return res
-			.status(500)
-			.json({ error: "Failed to fetch image from Unsplash." });
+	} catch (error: any) {
+		if (error.response) {
+			console.error("Unsplash fetch error:", error.response.data);
+			return res
+				.status(500)
+				.json({
+					error: "Failed to fetch image from Unsplash.",
+					details: error.response.data,
+				});
+		} else {
+			console.error("Unsplash fetch error:", error.message || error);
+			return res
+				.status(500)
+				.json({
+					error: "Failed to fetch image from Unsplash.",
+					details: error.message || String(error),
+				});
+		}
 	}
 });
