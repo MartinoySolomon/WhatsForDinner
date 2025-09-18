@@ -1,6 +1,16 @@
+@import "./assets/theme.css";
+
 #root {
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
-  box-sizing: border-box;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+	box-sizing: border-box;
+	font-family: var(--font-family);
+  color:var(--text-color);
+  background-color: var(--background-color);
+}
+
+img{
+  width:50vw;
+
 }

@@ -82,6 +82,34 @@ git commit -m "Describe your changes here"
 git push --set-upstream origin your-branch-name
 ```
 
+**VERY IMPORTANT!!**
+
+Before you start working on your branch, always make sure it’s up to date with main. Follow these steps:
+
+Switch to main
+
+```sh
+git checkout main
+```
+
+Pull the latest changes from remote
+
+```sh
+git pull origin main
+```
+
+Switch back to your branch
+
+```sh
+git checkout <your-branch-name>
+```
+
+Merge main into your branch (or rebase, if that’s our workflow)
+
+```sh
+git merge main
+```
+
 ### 6. Create a Pull Request (PR)
 
 1. Go to the repository on GitHub.
@@ -113,8 +141,8 @@ git push --set-upstream origin your-branch-name
    npm install
    ```
 3. Start the development server:
-   ```
 
+   ```
    npm run dev
    ```
 
@@ -135,6 +163,7 @@ https://whatsfordinner-m0d2.onrender.com
   ```
   https://whatsfordinner-m0d2.onrender.com/api/recipe
   ```
+
 ---
 
 ## Contribution Guidelines
@@ -149,3 +178,31 @@ https://whatsfordinner-m0d2.onrender.com
 ## Contact
 
 For questions, contact the repository admin or open an issue on GitHub.
+
+---
+
+## Fetching Food Images
+
+To get an image of a food dish, use the following API endpoint:
+
+```
+GET https://whatsfordinner-m0d2.onrender.com/api/image?dish={dish-name}
+```
+
+Replace `{dish-name}` with the name of the food you want an image for (e.g., `pizza`, `sushi`, `pasta`).
+
+**Example:**
+
+```
+GET https://whatsfordinner-m0d2.onrender.com/api/image?dish=pizza
+```
+
+**Response:**
+
+```
+{
+  "imageUrl": "https://images.unsplash.com/photo-..."
+}
+```
+
+You can use the `imageUrl` in your frontend to display the image.
