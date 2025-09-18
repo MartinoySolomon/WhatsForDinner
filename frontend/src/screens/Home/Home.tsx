@@ -12,19 +12,6 @@ import {
 } from "../../utils/constants";
 import useRecipe from "../../hooks/useRecipe";
 
-import logo from "../../assets/logo.png";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchRecipe } from "../../api/recipeApi";
-import { fetchImage } from "../../api/imageApi";
-import Slider from "../../components/Slider/Slider";
-import {
-	SKILL_LEVELS,
-	FLAVOR_PREFERENCES,
-	CUISINES,
-} from "../../utils/constants";
-import useRecipe from "../../hooks/useRecipe";
-
 export default function Home() {
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
 	const [flavorPreference, setFlavorPreference] = useState(
