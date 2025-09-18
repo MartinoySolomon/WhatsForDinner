@@ -6,7 +6,6 @@ export default function Result() {
 	return (
 		<>
 			<div>
-				<h1>Result</h1>
 				{recipe && (
 					<div>
 						<h2>{recipe.name}</h2>
@@ -15,15 +14,16 @@ export default function Result() {
 							alt={recipe.name}
 						/>
 						<p>{recipe.description}</p>
-						<p>
+
+						<ul>
 							{recipe.ingredients.map((ingredient, index) => (
-								<ul>
-									<li key={index}>
-										{ingredient.quantity} {ingredient.name}{" "}
-									</li>
-								</ul>
+								<li key={index}>
+									{ingredient.quantity} {ingredient.name}{" "}
+								</li>
 							))}
-						</p>
+						</ul>
+
+						<p>{recipe.instructions}</p>
 					</div>
 				)}
 			</div>
