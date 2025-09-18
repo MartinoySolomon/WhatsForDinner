@@ -12,6 +12,19 @@ import {
 } from "../../utils/constants";
 import useRecipe from "../../hooks/useRecipe";
 
+import logo from "../../assets/logo.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchRecipe } from "../../api/recipeApi";
+import { fetchImage } from "../../api/imageApi";
+import Slider from "../../components/Slider/Slider";
+import {
+	SKILL_LEVELS,
+	FLAVOR_PREFERENCES,
+	CUISINES,
+} from "../../utils/constants";
+import useRecipe from "../../hooks/useRecipe";
+
 export default function Home() {
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
 	const [flavorPreference, setFlavorPreference] = useState(
@@ -65,6 +78,46 @@ export default function Home() {
 			<div>
 				<h1>Home</h1>
 			</div>
+			{isLoading && <p>Loading...</p>}
+			{error && <p className="error">{error}</p>}
+			<img
+				src={logo}
+				alt="Logo"
+				onClick={getRecipe}
+			/>
+			<Slider
+				min={1}
+				max={SKILL_LEVELS.length}
+				value={skillLevel}
+				setValue={setSkillLevel}
+				step={1}
+				valueOptions={SKILL_LEVELS.map((level) => level.name)}
+			/>
+			<Slider
+				min={1}
+				max={FLAVOR_PREFERENCES.length}
+				value={flavorPreference}
+				setValue={setFlavorPreference}
+				step={1}
+				valueOptions={FLAVOR_PREFERENCES.map((flavor) => flavor.name)}
+			/>
+			<select
+				value={cuisine}
+				onChange={(e) => setCuisine(e.target.value)}>
+				{CUISINES.map((cuisine) => (
+					<option
+						key={cuisine}
+						value={cuisine}>
+						{cuisine}
+					</option>
+				))}
+			</select>
+			<br />
+			<input
+				type="number"
+				value={time}
+				onChange={(e) => setTime(Number(e.target.value))}
+			/>
 			{isLoading && <p>Loading...</p>}
 			{error && <p className="error">{error}</p>}
 			<img
