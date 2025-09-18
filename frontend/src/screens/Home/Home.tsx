@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipe } from "../../api/recipeApi";
 import { fetchImage } from "../../api/imageApi";
+import useRecipe from "../../hooks/useRecipe";
 import Slider from "../../components/Slider/Slider";
+import Loader from "../../components/Loader/Loader";
 import {
 	SKILL_LEVELS,
 	FLAVOR_PREFERENCES,
 	CUISINES,
 } from "../../utils/constants";
-import useRecipe from "../../hooks/useRecipe";
 
 export default function Home() {
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
@@ -19,16 +20,8 @@ export default function Home() {
 	);
 	const [cuisine, setCuisine] = useState(CUISINES[0]);
 	const [time, setTime] = useState(10);
-	const {
-		recipe,
-		setRecipe,
-		userInput,
-		setUserInput,
-		isLoading,
-		setIsLoading,
-		error,
-		setError,
-	} = useRecipe();
+	const { setRecipe, setUserInput, isLoading, setIsLoading, error, setError } =
+		useRecipe();
 	const navigate = useNavigate();
 
 	const getRecipe = async () => {
@@ -59,51 +52,64 @@ export default function Home() {
 			setIsLoading(false);
 		}
 	};
+
 	return (
 		<>
-			<div>
-				<h1>Home</h1>
-			</div>
-			{isLoading && <p>Loading...</p>}
+			{isLoading && <Loader />}
 			{error && <p className="error">{error}</p>}
-			<img
-				src={logo}
-				alt="Logo"
-				onClick={getRecipe}
-			/>
-			<Slider
-				min={1}
-				max={SKILL_LEVELS.length}
-				value={skillLevel}
-				setValue={setSkillLevel}
-				step={1}
-				valueOptions={SKILL_LEVELS.map((level) => level.name)}
-			/>
-			<Slider
-				min={1}
-				max={FLAVOR_PREFERENCES.length}
-				value={flavorPreference}
-				setValue={setFlavorPreference}
-				step={1}
-				valueOptions={FLAVOR_PREFERENCES.map((flavor) => flavor.name)}
-			/>
-			<select
-				value={cuisine}
-				onChange={(e) => setCuisine(e.target.value)}>
-				{CUISINES.map((cuisine) => (
-					<option
-						key={cuisine}
-						value={cuisine}>
-						{cuisine}
-					</option>
-				))}
-			</select>
-			<br />
-			<input
-				type="number"
-				value={time}
-				onChange={(e) => setTime(Number(e.target.value))}
-			/>
+			{!isLoading && (
+				<>
+					<div className="home-container">
+						<div className="btn">
+							<img
+								src={logo}
+								alt="Logo"
+								onClick={getRecipe}
+							/>
+						</div>
+						<div className="skill-level-input">
+							<Slider
+								min={1}
+								max={SKILL_LEVELS.length}
+								value={skillLevel}
+								setValue={setSkillLevel}
+								step={1}
+								valueOptions={SKILL_LEVELS.map((level) => level.name)}
+							/>
+						</div>
+						<div className="flavor-input">
+							<Slider
+								min={1}
+								max={FLAVOR_PREFERENCES.length}
+								value={flavorPreference}
+								setValue={setFlavorPreference}
+								step={1}
+								valueOptions={FLAVOR_PREFERENCES.map((flavor) => flavor.name)}
+							/>
+						</div>
+						<div className="cuisine-input">
+							<select
+								value={cuisine}
+								onChange={(e) => setCuisine(e.target.value)}>
+								{CUISINES.map((cuisine) => (
+									<option
+										key={cuisine}
+										value={cuisine}>
+										{cuisine}
+									</option>
+								))}
+							</select>
+						</div>
+						<div className="time-input">
+							<input
+								type="number"
+								value={time}
+								onChange={(e) => setTime(Number(e.target.value))}
+							/>
+						</div>
+					</div>
+				</>
+			)}
 		</>
 	);
 }
