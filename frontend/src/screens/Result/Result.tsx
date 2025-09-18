@@ -1,6 +1,7 @@
 import "./Result.css";
 import useRecipe from "../../hooks/useRecipe";
 export default function Result() {
+
 	const { recipe } = useRecipe();
 	console.log(recipe);
 	return (
@@ -29,4 +30,5 @@ export default function Result() {
 			</div>
 		</>
 	);
+
 }

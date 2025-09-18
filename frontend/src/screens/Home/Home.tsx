@@ -8,12 +8,13 @@ import useRecipe from "../../hooks/useRecipe";
 import Slider from "../../components/Slider/Slider";
 import Loader from "../../components/Loader/Loader";
 import {
-	SKILL_LEVELS,
-	FLAVOR_PREFERENCES,
-	CUISINES,
+  SKILL_LEVELS,
+  FLAVOR_PREFERENCES,
+  CUISINES,
 } from "../../utils/constants";
 
 export default function Home() {
+
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
 	const [flavorPreference, setFlavorPreference] = useState(
 		FLAVOR_PREFERENCES[0].id
@@ -112,4 +113,5 @@ export default function Home() {
 			)}
 		</>
 	);
+
 }
