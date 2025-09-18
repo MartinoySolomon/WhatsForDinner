@@ -59,7 +59,6 @@ export default function Home() {
 			setIsLoading(false);
 		}
 	};
-
 	return (
 		<>
 			<div>
