@@ -7,11 +7,12 @@ export default function Recipe() {
   const navigate = useNavigate();
 
   const { recipe } = useRecipe();
+  console.log(recipe);
+
   return (
-    <>
-      <div>
-        <h1>Recipe</h1>
-        <h2>Preperation:</h2>
+    <div className="Recipe">
+      <h1>Your Recipe</h1>
+      <h2>Preperation:</h2>
 
         <div>Timer</div>
         <Timer />
@@ -19,7 +20,7 @@ export default function Recipe() {
         <p>{recipe?.instructions}</p>
         <h2>Baking:</h2>
 
-        <button onClick={() => {navigate("/")}}>Finished, Go Back to Home Page</button>
+        <button className="back-button" onClick={() => {navigate("/")}}>Finished, Go Back to Home Page</button>
 
       </div>
     </>
