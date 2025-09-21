@@ -2,7 +2,10 @@ import "./Recipe.css";
 import Timer from "../../components/Timer/Timer";
 import useRecipe from "../../hooks/useRecipe";
 
+import { useNavigate } from "react-router-dom";
 export default function Recipe() {
+  const navigate = useNavigate();
+
   const { recipe } = useRecipe();
   return (
     <>
@@ -15,7 +18,9 @@ export default function Recipe() {
         <h2>Cooking:</h2>
         <p>{recipe?.instructions}</p>
         <h2>Baking:</h2>
-        <button>Finished, Go Back to Home Page</button>
+
+        <button onClick={() => {navigate("/")}}>Finished, Go Back to Home Page</button>
+
       </div>
     </>
   );

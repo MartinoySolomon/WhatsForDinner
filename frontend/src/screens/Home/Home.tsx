@@ -12,6 +12,8 @@ import {
   FLAVOR_PREFERENCES,
   CUISINES,
 } from "../../utils/constants";
+import ClockTimePicker from "../../components/ClockTimePicker/ClockTimePicker";
+import CuisineWorldMap from "../../components/CuisineWorldMap/CuisineWorldMap";
 
 export default function Home() {
 
@@ -69,6 +71,7 @@ export default function Home() {
 							/>
 						</div>
 						<div className="skill-level-input">
+							<h3 className="input-header">Set Skill Level</h3>
 							<Slider
 								min={1}
 								max={SKILL_LEVELS.length}
@@ -79,6 +82,7 @@ export default function Home() {
 							/>
 						</div>
 						<div className="flavor-input">
+							<h3 className="input-header">Set Flavor Preference</h3>
 							<Slider
 								min={1}
 								max={FLAVOR_PREFERENCES.length}
@@ -89,6 +93,7 @@ export default function Home() {
 							/>
 						</div>
 						<div className="cuisine-input">
+							<h3 className="input-header">Set Cuisine</h3>
 							<select
 								value={cuisine}
 								onChange={(e) => setCuisine(e.target.value)}>
@@ -100,13 +105,11 @@ export default function Home() {
 									</option>
 								))}
 							</select>
+							<CuisineWorldMap onSelectCuisine={setCuisine} />
 						</div>
 						<div className="time-input">
-							<input
-								type="number"
-								value={time}
-								onChange={(e) => setTime(Number(e.target.value))}
-							/>
+							<h3 className="input-header">Set Preparation Time</h3>
+							<ClockTimePicker setTime={setTime} />
 						</div>
 					</div>
 				</>
