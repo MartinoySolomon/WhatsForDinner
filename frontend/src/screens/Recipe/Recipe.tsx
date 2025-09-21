@@ -20,7 +20,9 @@ export default function Recipe() {
         <p>{recipe?.instructions}</p>
         <h2>Baking:</h2>
 
+
         <button className="back-button" onClick={() => {navigate("/")}}>Finished, Go Back to Home Page</button>
+
 
       </div>
     </>
