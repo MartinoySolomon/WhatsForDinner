@@ -151,7 +151,7 @@ const Timer: React.FC = () => {
           Reset
         </button>
       </div>
-      {isFinished && <div className="finished-message">Time's up! 🎉</div>}
+      {isFinished && <div className="finished-message">Time's up!</div>}
     </div>
   );
 };

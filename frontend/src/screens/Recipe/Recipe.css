@@ -1,0 +1,17 @@
+.Recipe {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #ac4e3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
