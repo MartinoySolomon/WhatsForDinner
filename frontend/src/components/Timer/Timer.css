@@ -1,12 +1,16 @@
-/* .Timer {
-  /* display: flex;
+.Timer {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-background-color: #f0f2f5; */
-/* color: #333;} */
+  padding: 20px;
+  width: fit-content;
+
+  /* font-family: Arial, sans-serif; */
+  /* min-height: 100vh; */
+  /* background-color: #f0f2f5;
+  color: #333; */
+}
 
 /* .title {
   font-size: 2.5em;
@@ -19,8 +23,8 @@ background-color: #f0f2f5; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
-  background-color: #fff;
+  margin-bottom: 20px;
+  background-color: #ac4e3a;
   width: fit-content;
   padding: 20px 40px;
   border-radius: 15px;
@@ -31,12 +35,14 @@ background-color: #f0f2f5; */
   display: flex;
   align-items: center;
   gap: 10px;
+  background-color: #ac4e3a;
 }
 
 .time-picker-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ac4e3a;
 }
 
 .time-picker {
@@ -46,7 +52,7 @@ background-color: #f0f2f5; */
   scroll-snap-type: y mandatory;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  border: 2px solid #ddd;
+  border: 2px solid #a46e6e;
   border-radius: 10px;
   position: relative;
   box-sizing: content-box;
@@ -61,7 +67,7 @@ background-color: #f0f2f5; */
   line-height: 30px;
   text-align: center;
   font-size: 1.2em;
-  color: #999;
+  color: #999999;
   transition: color 0.3s, font-size 0.3s;
   scroll-snap-align: center;
 }
@@ -82,14 +88,16 @@ background-color: #f0f2f5; */
 .time-label {
   margin-top: 5px;
   font-size: 0.9em;
-  color: #777;
+  color: #da9f92;
+  background-color: #ac4e3a;
 }
 
 .colon {
   font-size: 2em;
-  color: #555;
+  color: #555555;
   align-self: flex-start;
   line-height: 90px;
+  background-color: #ac4e3a;
 }
 
 .countdown {
@@ -115,7 +123,7 @@ background-color: #f0f2f5; */
   font-size: 1.1em;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: #ce7902;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -124,7 +132,7 @@ background-color: #f0f2f5; */
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: #ba6d01;
 }
 
 .button:active {
@@ -132,18 +140,18 @@ background-color: #f0f2f5; */
 }
 
 .button.reset {
-  background-color: #dc3545;
+  background-color: #dc3a04;
 }
 
 .button.reset:hover {
-  background-color: #c82333;
+  background-color: #cb3604;
 }
 
 .finished-message {
   margin-top: 20px;
   font-size: 1.5em;
   font-weight: bold;
-  color: #28a745;
+  color: #c02f1b;
   animation: pulse 1s infinite;
 }
 
