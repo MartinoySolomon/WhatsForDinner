@@ -2,7 +2,9 @@ import "./Result.css";
 import useRecipe from "../../hooks/useRecipe";
 import { useNavigate } from "react-router-dom";
 export default function Result() {
+
 	const navigate = useNavigate();
+
 	const { recipe } = useRecipe();
 	console.log(recipe);
 	return (
@@ -35,4 +37,5 @@ export default function Result() {
 			</div>
 		</>
 	);
+
 }
