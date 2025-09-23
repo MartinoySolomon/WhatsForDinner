@@ -76,7 +76,7 @@ export default function Result() {
 							<h3>{`${Math.floor((recipe.cookTime + recipe.prepTime) / 60)}h ${
 								(recipe.cookTime + recipe.prepTime) % 60
 							}min`}</h3>
-				
+
 						</div>
 					</div>
 				</div>
