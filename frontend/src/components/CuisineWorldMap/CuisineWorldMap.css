@@ -1,0 +1,11 @@
+.worldmap__figure-container {
+	background: transparent !important;
+	width: 100% !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	justify-items: center !important;
+	svg {
+		background: transparent !important;
+	}
+}

@@ -8,9 +8,9 @@ export const SKILL_LEVELS = [
 
 export const FLAVOR_PREFERENCES = [
 	{ id: 1, name: "Nutritious" },
-	{ id: 2, name: "Balanced-Nutritious" },
+	{ id: 2, name: "Guilt-free" },
 	{ id: 3, name: "Balanced" },
-	{ id: 4, name: "Balanced-Delicious" },
+	{ id: 4, name: "Indulgent" },
 	{ id: 5, name: "Delicious" },
 ];
 

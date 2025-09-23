@@ -10,6 +10,7 @@ export default function Recipe() {
   console.log(recipe);
 
   return (
+    <>
     <div className="Recipe">
       <h1>Your Recipe</h1>
       <h2>Preperation:</h2>
