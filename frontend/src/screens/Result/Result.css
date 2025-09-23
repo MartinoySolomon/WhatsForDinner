@@ -1,0 +1,98 @@
+.recipe-card {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    justify-content: space-around;
+	.logo {
+		width: 12rem;
+		margin: 1rem 0;
+		background: transparent;
+	}
+	.recipe-title {
+        font-size: 1.5rem;
+		margin: 1rem 0;
+		h2,
+		p {
+            font-family: "Roboto Slab", serif;
+		}
+	}
+	.recipe-card-content {
+        display: flex;
+		width: 100%;
+		justify-content: center;
+		align-items: start;
+		padding: 2rem;
+		.recipe-ingredients {
+            width: 50%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			h3 {
+                align-self: flex-start;
+				font-family: "Roboto Slab", serif;
+				margin: 1rem 10%;
+				font-size: 1.8rem;
+			}
+			.ingredient {
+                text-align: left !important;
+				margin: 0.2rem 0;
+				padding: 0.5rem 0;
+				width: 80%;
+				border-bottom: 2px solid var(--grey-color);
+			}
+		}
+		.recipe-img {
+            width: 50%;
+			img {
+                border-radius: var(--border-radius);
+				width: 80%;
+			}
+		}
+	}
+    .start-btn {
+        background: transparent;
+        width: 250px;
+        cursor: pointer;
+        position: absolute;
+        bottom: 100px;
+        transition: all 0.3s ease;
+    }
+    .start-btn:hover {
+        animation: gelatine 1s infinite;
+    }
+	.recipe-input {
+        width:100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin:1rem 0;
+		.recipe-input-item {
+
+            h4{
+                font-weight: var(--font-weight-light);
+            }
+            h3{
+                color:var(--primary-color);
+                font-family: "Roboto Slab", serif;
+            }
+		}
+	}
+}
+
+@keyframes gelatine {
+	from,
+	to {
+		transform: scale(1, 1);
+	}
+	25% {
+		transform: scale(0.9, 1.1);
+	}
+	50% {
+		transform: scale(1.1, 0.9);
+	}
+	75% {
+		transform: scale(0.95, 1.05);
+	}
+}

@@ -1,13 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
 
 :root {
-	--font-family: "Roboto Slab", serif;
+	--font-family: "Nunito", sans-serif;
 	--primary-color: #ac4e3a;
 	--secondary-color: #c86c5a;
-	--background-color: #f0f0f0;
-	--text-color: #71484b;
+	--background-color: #F4F1E9;
+	--text-color: #264653;
 	--grey-color: #aeb2b2;
-	--border-radius: 8px;
+	--border-radius: 50px;
 	--font-weight-light: 300;
 	--font-weight-regular: 400;
 	--font-weight-bold: 700;
