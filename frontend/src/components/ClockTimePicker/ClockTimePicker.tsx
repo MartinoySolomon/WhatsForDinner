@@ -1,12 +1,12 @@
-import { useState,useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import "./ClockTimePicker.css";
 export default function ClockTimePicker({
 	setTime,
 }: {
 	setTime: (time: number) => void;
 }) {
 	const [angle, setAngle] = useState(0);
-	const radius = 120;
+	const radius = 100;
 	const center = { x: 150, y: 150 };
 
 	const handleDrag = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -34,19 +34,16 @@ export default function ClockTimePicker({
 	const handY = center.y - handLength * Math.cos(rad);
 
 	return (
-		<div className="flex flex-col items-center justify-center p-4">
+		<div className="clock-time-picker">
 			<svg
-				width="300"
-				height="300"
 				onMouseMove={(e) => e.buttons === 1 && handleDrag(e)}
-				onMouseDown={handleDrag}
-				className="cursor-pointer">
+				onMouseDown={handleDrag}>
 				{/* Clock face */}
 				<circle
 					cx={center.x}
 					cy={center.y}
 					r={radius}
-					stroke="var(--grey-color"
+					stroke="var(--grey-color)"
 					strokeWidth="4"
 					fill="var(--secondary-color)"
 				/>
@@ -78,7 +75,7 @@ export default function ClockTimePicker({
 					x2={handX}
 					y2={handY}
 					stroke="var(--text-color)"
-					strokeWidth="8"
+					strokeWidth="10"
 					strokeLinecap="round"
 				/>
 
@@ -90,9 +87,6 @@ export default function ClockTimePicker({
 					fill="black"
 				/>
 			</svg>
-			<p>
-				Selected Time: {hours}h {minutes}m
-			</p>
 		</div>
 	);
 }

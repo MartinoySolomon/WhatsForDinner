@@ -7,6 +7,24 @@ interface RecipeInput {
 	time: number;
 }
 
+interface Ingredient {
+	name: string;
+	quantity: string;
+}
+
+interface Recipe {
+	name: string;
+	description: string;
+	ingredients: Ingredient[];
+	instructions: string[];
+	cuisine: string;
+	prepTime: number;
+	cookTime: number;
+	skillLevel: number;
+	nutrition: number;
+	imageUrl: string;
+}
+
 export async function generateRecipe({
 	skill,
 	taste,
@@ -18,26 +36,86 @@ export async function generateRecipe({
 		apiKey: process.env.OPENAI_API_KEY,
 	});
 
-	// Build the prompt for OpenAI
-	const prompt = `Suggest a dinner recipe based on these preferences:\n
-Skill level: ${skill}\nTaste vs Nutrition: ${taste}\nCuisine: ${cuisine}\nTime available: ${time} minutes\n
-Return a JSON object with the following fields: name, description, ingredients (array of objects with name and quantity), instructions (array), cuisine, prep time (number) in minutes, cook time (number) in minutes, skill level.`;
+	// Build the prompt for OpenAI with exact JSON format specification
+	const prompt = `Suggest a dinner recipe based on these preferences:
+Skill level: ${skill} (1-5 scale)
+Taste vs Nutrition balance: ${taste} (1-5 scale, where 1 is healthy, 5 is tasty)
+Cuisine: ${cuisine}
+Time available: ${time} in minutes
+
+You must return ONLY a valid JSON object with this exact structure:
+{
+  "name": "Recipe Name",
+  "description": "Brief description of the dish",
+  "ingredients": [
+    {"name": "ingredient name", "quantity": "amount with unit"}
+  ],
+  "instructions": ["step 1", "step 2", "step 3"],
+  "cuisine": "${cuisine}",
+  "prepTime": number_in_minutes,
+  "cookTime": number_in_minutes,
+  "skillLevel": ${skill},
+  "nutrition": ${taste},
+  "imageUrl": ""
+}
+
+Ensure prepTime + cookTime does not exceed ${time} in minutes. Return only the JSON object, no additional text.`;
 
 	const response = await openai.chat.completions.create({
 		model: "gpt-3.5-turbo",
 		messages: [
-			{ role: "system", content: "You are a helpful chef assistant." },
+			{ 
+				role: "system", 
+				content: "You are a helpful chef assistant. Always respond with valid JSON only, no markdown or additional text." 
+			},
 			{ role: "user", content: prompt },
 		],
 		temperature: 0.7,
-		max_tokens: 600,
+		max_tokens: 800,
+		response_format: { type: "json_object" }
 	});
 
 	// Try to parse the response as JSON
 	const text = response.choices[0]?.message?.content || "";
 	try {
-		return JSON.parse(text);
-	} catch {
-		return { error: "Could not parse recipe response." };
+		const recipe: any = JSON.parse(text);
+		
+		// Validate that all required fields are present
+		const requiredFields = ['name', 'description', 'ingredients', 'instructions', 'cuisine', 'prepTime', 'cookTime', 'skillLevel', 'nutrition'];
+		const missingFields = requiredFields.filter(field => !(field in recipe));
+		
+		if (missingFields.length > 0) {
+			console.error('Missing required fields:', missingFields);
+			return { 
+				error: `Invalid recipe format. Missing fields: ${missingFields.join(', ')}` 
+			};
+		}
+
+		// Ensure imageUrl exists (set to empty string if not provided)
+		if (!recipe.imageUrl) {
+			recipe.imageUrl = "";
+		}
+
+		// Validate ingredients format
+		if (!Array.isArray(recipe.ingredients) || recipe.ingredients.some((ing: any) => !ing.name || !ing.quantity)) {
+			return { 
+				error: "Invalid ingredients format. Each ingredient must have name and quantity." 
+			};
+		}
+
+		// Validate instructions format
+		if (!Array.isArray(recipe.instructions) || recipe.instructions.length === 0) {
+			return { 
+				error: "Invalid instructions format. Must be a non-empty array of strings." 
+			};
+		}
+
+		return recipe as Recipe;
+	} catch (error) {
+		console.error('JSON parsing error:', error);
+		console.error('Raw response:', text);
+		return { 
+			error: "Could not parse recipe response. Please try again." 
+		};
 	}
 }
