@@ -101,7 +101,6 @@ const Timer: React.FC = () => {
 
   return (
     <div className="Timer">
-      <h1 className="title">Timer </h1>
       <div className="timer-display">
         {isRunning || isFinished ? (
           <div className="countdown">

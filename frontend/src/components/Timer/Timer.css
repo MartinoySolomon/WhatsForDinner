@@ -5,20 +5,7 @@
   justify-content: center;
   padding: 20px;
   width: fit-content;
-
-  /* font-family: Arial, sans-serif; */
-  /* min-height: 100vh; */
-  /* background-color: #f0f2f5;
-  color: #333; */
 }
-
-/* .title {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #555;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-} */
-
 .timer-display {
   display: flex;
   flex-direction: column;
@@ -104,10 +91,11 @@
   font-size: 3em;
   font-weight: bold;
   letter-spacing: 2px;
-  color: #007bff;
+  background: transparent;
 }
 
 .countdown-item {
+  background: transparent;
   display: inline-block;
   min-width: 60px;
   text-align: center;
@@ -123,7 +111,7 @@
   font-size: 1.1em;
   font-weight: bold;
   color: #fff;
-  background-color: #ce7902;
+  background-color: var(--secondary-color);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -132,7 +120,7 @@
 }
 
 .button:hover {
-  background-color: #ba6d01;
+  background-color: var(--primary-color);
 }
 
 .button:active {
@@ -140,11 +128,11 @@
 }
 
 .button.reset {
-  background-color: #dc3a04;
+  background-color: var(--secondary-color);
 }
 
 .button.reset:hover {
-  background-color: #cb3604;
+  background-color:var(--primary-color);
 }
 
 .finished-message {

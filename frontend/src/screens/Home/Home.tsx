@@ -79,7 +79,6 @@ export default function Home() {
 							<h3 className="input-header">
 							How much time do you have?
 							<span className="subtext">{`${Math.floor(time / 60)}h ${time % 60}min`}</span>	
-							{/* {`Dinner will be served in ${Math.floor(time / 60)}h ${time % 60}min`} */}
 								</h3>
 							<ClockTimePicker setTime={setTime} />
 						</div>
