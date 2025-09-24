@@ -87,7 +87,7 @@ CRITICAL REQUIREMENTS:
 Return ONLY a valid JSON object with this exact structure:
 {
   "name": "Unique Recipe Name",
-  "description": "Detailed description highlighting why this matches the skill level and taste preference",
+  "description": "Brief 1-2 sentence description of the dish and its appeal",
   "ingredients": [
     {"name": "specific ingredient name", "quantity": "exact amount with unit"}
   ],
@@ -113,7 +113,8 @@ Key principles:
 - Reflect the taste/nutrition balance accurately in ingredient choices
 - Create varied, unique recipes - avoid repetition
 - Ensure authenticity to the requested cuisine
-- Include specific techniques appropriate for the skill level`,
+- Include specific techniques appropriate for the skill level
+- Keep descriptions concise - maximum 1-2 sentences only`,
 			},
 			{ role: "user", content: prompt },
 		],
