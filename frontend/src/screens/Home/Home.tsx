@@ -108,6 +108,15 @@ export default function Home() {
 							/>
 						</div>
 					)}
+					{isDesktop && (
+						<div className="btn">
+							<img
+								src={logo}
+								alt="Logo"
+								onClick={getRecipe}
+							/>
+						</div>
+					)}
 					<div className="home-container">
 						<div className="input-item time">
 							<h3 className="input-header">
