@@ -4,6 +4,10 @@
 	background: transparent;
 	cursor: pointer;
 }
-@media (max-width:768px){
-	
+@media (max-width: 768px) {
+	.logo {
+		width: 10rem;
+		margin: 0;
+		margin-top:0.3rem;
+	}
 }
