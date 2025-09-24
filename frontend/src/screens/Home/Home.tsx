@@ -1,6 +1,6 @@
 import "./Home.css";
 import logo from "../../assets/logo.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipe } from "../../api/recipeApi";
 import { fetchImage } from "../../api/imageApi";
@@ -13,6 +13,7 @@ import knife from "../../assets/french-knife.png";
 import salad from "../../assets/salad.png";
 import pizza from "../../assets/pizza.png";
 import meal from "../../assets/meal.png";
+import logoMobile from "../../assets/logo-mobile.png";
 import {
 	SKILL_LEVELS,
 	FLAVOR_PREFERENCES,
@@ -20,8 +21,10 @@ import {
 } from "../../utils/constants";
 import ClockTimePicker from "../../components/ClockTimePicker/ClockTimePicker";
 import CuisineWorldMap from "../../components/CuisineWorldMap/CuisineWorldMap";
+import WindowContext from "../../context/WindowContext";
 
 export default function Home() {
+	const isDesktop = useContext(WindowContext);
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
 	const [flavorPreference, setFlavorPreference] = useState(
 		FLAVOR_PREFERENCES[0].id
@@ -75,13 +78,15 @@ export default function Home() {
 			{error && <p className="error">{error}</p>}
 			{!isLoading && (
 				<>
-					<div className="btn">
-						<img
-							src={logo}
-							alt="Logo"
-							onClick={getRecipe}
-						/>
-					</div>
+					{isDesktop && (
+						<div className="btn">
+							<img
+								src={logo}
+								alt="Logo"
+								onClick={getRecipe}
+							/>
+						</div>
+					)}
 					<div className="home-container">
 						<div className="input-item time">
 							<h3 className="input-header">
@@ -97,6 +102,15 @@ export default function Home() {
 
 							<CuisineWorldMap onSelectCuisine={setCuisine} />
 						</div>
+							{!isDesktop && (
+								<div className="btn">
+									<img
+										src={logoMobile}
+										alt="Logo"
+										onClick={getRecipe}
+									/>
+								</div>
+							)}
 						<div className="input-item skill">
 							<h3 className="input-header">What's Your Skill Level?</h3>
 							<Slider

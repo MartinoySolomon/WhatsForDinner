@@ -1,9 +1,8 @@
-// import React from "react";
 import { WorldMap } from "react-svg-worldmap";
 import { CUISINE_COUNTRY_CODES } from "../../utils/cuisineCountryCodes";
 import "./CuisineWorldMap.css";
-// Prepare data for react-svg-worldmap
-// Each country code is unique, so no duplicate key issue for WorldMap
+import { useContext } from "react";
+import WindowContext from "../../context/WindowContext";
 const data = CUISINE_COUNTRY_CODES.map(({ country, cuisine }) => ({
 	country,
 	value: 1,
@@ -17,7 +16,7 @@ export default function CuisineWorldMap({
 }) {
 	// Only allow selection for countries in our list
 	const allowedCountries = new Set(CUISINE_COUNTRY_CODES.map((c) => c.country));
-
+	const isDesktop = useContext(WindowContext);
 	function handleCountryClick(event: { countryCode: string }) {
 		const countryCode = event.countryCode;
 		const cuisineObj = CUISINE_COUNTRY_CODES.find(
@@ -31,7 +30,7 @@ export default function CuisineWorldMap({
 	return (
 		<>
 			<WorldMap
-				size="lg"
+				size={isDesktop ? "lg" : "sm"}
 				data={data}
 				onClickFunction={handleCountryClick}
 				styleFunction={({ countryCode }) => ({

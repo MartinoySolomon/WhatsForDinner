@@ -13,13 +13,12 @@
 		width: 85%;
 		height: 15px;
 		background: var(--text-color);
-        cursor: pointer;
+		cursor: pointer;
 		outline: none;
 		opacity: 0.7;
 		transition: opacity 0.2s;
-        margin: 1rem 0;
-        border-radius: 8px;
-        
+		margin: 1rem 0;
+		border-radius: 8px;
 	}
 	.slider-input input:hover {
 		opacity: 1;
@@ -43,6 +42,21 @@
 	}
 }
 
- @media (max-width: 768px) {
-	
- }
+@media (max-width: 768px) {
+	.slider-container {
+		.slider-input input {
+			height: 5px;
+		}
+		/* Styling the slider thumb (for WebKit browsers) */
+		.slider-input input::-webkit-slider-thumb {
+			width: 5px;
+			height: 25px;
+		}
+		.slider-labels {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+			font-size: 0.9rem;
+		}
+	}
+}
