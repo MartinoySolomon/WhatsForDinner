@@ -1,7 +1,6 @@
 import "./Result.css";
 import useRecipe from "../../hooks/useRecipe";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo3.png";
 import start from "../../assets/start-btn.png";
 import { SKILL_LEVELS } from "../../utils/constants";
 import { FLAVOR_PREFERENCES } from "../../utils/constants";

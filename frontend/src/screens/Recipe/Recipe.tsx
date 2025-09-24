@@ -9,9 +9,9 @@ export default function Recipe() {
 	return (
 		<>
 			{error && <div className="error">{error}</div>}
-			<Logo />
 			{recipe && (
 				<div className="recipe">
+					<Logo />
 					<div className="recipe-title">
 						<h2>{recipe.name}</h2>
 						<p>{recipe.description}</p>
@@ -20,18 +20,19 @@ export default function Recipe() {
 						<div className="recipe-ingredients">
 							<h3>Ingredients</h3>
 							{recipe.ingredients.map((ingredient, index) => (
-                <div
-                className="ingredient"
-                key={index}>
+								<div
+									className="ingredient"
+									key={index}>
 									<b>{ingredient.name}</b> <i>{ingredient.quantity}</i>
 								</div>
 							))}
 						</div>
 						<ol className="recipe-instructions">
-              <h3>Instructions</h3>
+							<h3>Instructions</h3>
 							{recipe.instructions.map((step, index) => (
-								<li key={index}
-                className="instruction">
+								<li
+									key={index}
+									className="instruction">
 									{step}
 								</li>
 							))}
