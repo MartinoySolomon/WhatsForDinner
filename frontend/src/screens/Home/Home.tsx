@@ -22,6 +22,8 @@ import {
 import ClockTimePicker from "../../components/ClockTimePicker/ClockTimePicker";
 import CuisineWorldMap from "../../components/CuisineWorldMap/CuisineWorldMap";
 import WindowContext from "../../context/WindowContext";
+import Logo from "../../components/Logo/Logo";
+import ErrorComponent from "../../components/Error/Error";
 
 export default function Home() {
 	const isDesktop = useContext(WindowContext);
@@ -41,8 +43,6 @@ export default function Home() {
 		clearRecipeData,
 	} = useRecipe();
 	const navigate = useNavigate();
-
-	// Handle body class for loading state
 	useEffect(() => {
 		if (isLoading) {
 			document.body.classList.add("loading");
@@ -50,7 +50,6 @@ export default function Home() {
 			document.body.classList.remove("loading");
 		}
 
-		// Cleanup on unmount
 		return () => {
 			document.body.classList.remove("loading");
 		};
@@ -58,6 +57,9 @@ export default function Home() {
 
 	const getRecipe = async () => {
 		clearRecipeData();
+		setRecipe(null);
+		setUserInput(null);
+		setError(null);
 		setIsLoading(true);
 		const input = {
 			skill: skillLevel,
@@ -69,11 +71,8 @@ export default function Home() {
 		try {
 			const newRecipe = await fetchRecipe(input);
 			if (!newRecipe) {
-				setError("No recipe found");
 				throw new Error("No recipe found");
 			}
-
-			// Use AI to generate a recipe-specific image
 			const newImage = await generateRecipeImage({
 				name: newRecipe.name,
 				description: newRecipe.description,
@@ -81,14 +80,18 @@ export default function Home() {
 			});
 
 			if (!newImage) {
-				setError("No image found");
 				throw new Error("No image found");
 			}
 			setRecipe({ ...newRecipe, imageUrl: newImage.imageUrl });
-		} catch (error) {
-			console.error("Error in handleClick:", error);
-		} finally {
 			navigate("/result");
+		} catch (err: any) {
+			console.error("Error in getRecipe:", err);
+			let errorMessage = "An unexpected error occurred. Please try again.";
+			if (err instanceof Error) {
+				errorMessage = err.message;
+			}
+			setError(errorMessage);
+		} finally {
 			setIsLoading(false);
 		}
 	};
@@ -96,8 +99,13 @@ export default function Home() {
 	return (
 		<>
 			{isLoading && <Loader />}
-			{error && <p className="error">{error}</p>}
-			{!isLoading && (
+			{error && (
+				<>
+					<Logo />
+					<ErrorComponent />
+				</>
+			)}
+			{!isLoading && !error && (
 				<>
 					{isDesktop && (
 						<div className="btn">

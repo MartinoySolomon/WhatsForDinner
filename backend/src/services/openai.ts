@@ -36,7 +36,6 @@ export async function generateRecipe({
 		apiKey: process.env.OPENAI_API_KEY,
 	});
 
-	// Create a more detailed and varied prompt with randomization elements
 	const skillDescriptions = {
 		1: "very easy - minimal cooking skills required, simple techniques",
 		2: "easy - basic cooking skills, simple preparation methods",
@@ -53,7 +52,6 @@ export async function generateRecipe({
 		5: "maximum flavor - rich, decadent, comfort food focused",
 	};
 
-	// Add randomization to prevent repetitive results
 	const creativityPrompts = [
 		"Create a unique twist on a classic dish.",
 		"Suggest something unexpected and creative.",
@@ -101,7 +99,7 @@ Return ONLY a valid JSON object with this exact structure:
 }`;
 
 	const response = await openai.chat.completions.create({
-		model: "gpt-4o-mini", // Better model than gpt-3.5-turbo, good balance of quality and cost
+		model: "gpt-4o-mini", 
 		messages: [
 			{
 				role: "system",
@@ -118,17 +116,16 @@ Key principles:
 			},
 			{ role: "user", content: prompt },
 		],
-		temperature: 0.8, // Slightly higher for more creativity and variation
-		max_tokens: 1500, // Nearly double the tokens for more detailed recipes
+		temperature: 0.8, 
+		max_tokens: 1500, 
 		response_format: { type: "json_object" },
 	});
 
-	// Try to parse the response as JSON
+	
 	const text = response.choices[0]?.message?.content || "";
 	try {
 		const recipe: any = JSON.parse(text);
 
-		// Validate that all required fields are present
 		const requiredFields = [
 			"name",
 			"description",
@@ -151,12 +148,10 @@ Key principles:
 			};
 		}
 
-		// Ensure imageUrl exists (set to empty string if not provided)
 		if (!recipe.imageUrl) {
 			recipe.imageUrl = "";
 		}
 
-		// Validate time constraints are met
 		const totalTime = (recipe.prepTime || 0) + (recipe.cookTime || 0);
 		if (totalTime > time) {
 			console.warn(
@@ -167,21 +162,18 @@ Key principles:
 			};
 		}
 
-		// Validate skill level matches
 		if (recipe.skillLevel !== skill) {
 			console.warn(
 				`Recipe skill level (${recipe.skillLevel}) doesn't match requested (${skill})`
 			);
 		}
 
-		// Validate nutrition/taste level matches
 		if (recipe.nutrition !== taste) {
 			console.warn(
 				`Recipe nutrition level (${recipe.nutrition}) doesn't match requested (${taste})`
 			);
 		}
 
-		// Validate ingredients format
 		if (
 			!Array.isArray(recipe.ingredients) ||
 			recipe.ingredients.some((ing: any) => !ing.name || !ing.quantity)
@@ -192,7 +184,6 @@ Key principles:
 			};
 		}
 
-		// Validate instructions format
 		if (
 			!Array.isArray(recipe.instructions) ||
 			recipe.instructions.length === 0
@@ -213,7 +204,6 @@ Key principles:
 	}
 }
 
-// Simple in-memory cache for generated images
 const imageCache = new Map<string, { url: string; timestamp: number }>();
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -222,24 +212,20 @@ export async function generateRecipeImage(
 	description: string,
 	cuisine: string
 ) {
-	// Create cache key from recipe name and cuisine
 	const cacheKey = `${recipeName
 		.toLowerCase()
 		.trim()}_${cuisine.toLowerCase()}`;
 
-	// Check cache first
 	const cached = imageCache.get(cacheKey);
 	if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
 		console.log(`Using cached image for: ${recipeName}`);
 		return { imageUrl: cached.url };
 	}
 
-	// Initialize OpenAI client
 	const openai = new OpenAI({
 		apiKey: process.env.OPENAI_API_KEY,
 	});
 
-	// Create a focused prompt for food-only image generation
 	const prompt = `Close-up ${recipeName}, ${cuisine} cuisine. ${description}. Professional food photography, appetizing, well-lit, restaurant quality presentation, overhead view, vibrant colors, fresh ingredients visible, food only, no camera, no people, no hands`;
 
 	try {
@@ -247,8 +233,8 @@ export async function generateRecipeImage(
 			model: "dall-e-3",
 			prompt: prompt,
 			n: 1,
-			size: "1792x1024", // Landscape format
-			quality: "standard", // Standard quality to save credits
+			size: "1792x1024", 
+			quality: "standard", 
 			style: "natural",
 		});
 
@@ -261,7 +247,6 @@ export async function generateRecipeImage(
 			throw new Error("No image URL returned from OpenAI");
 		}
 
-		// Cache the generated image
 		imageCache.set(cacheKey, { url: imageUrl, timestamp: Date.now() });
 		console.log(`Generated and cached new image for: ${recipeName}`);
 

@@ -30,7 +30,6 @@
 
 		.recipe-ingredients {
 			width: 50%;
-			width: 50%;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -146,14 +145,15 @@
 			.recipe-img {
 				order: -1;
 				width: 100%;
-				min-height: 33%;
+				/* min-height: 33%; */
 			}
 		}
 		.start-btn {
-			width: 40%;
+			width: 30%;
 			min-width: 200px;
-			max-width: 350px;
-			top: 33%;
+			max-width: 400px;
+			top: 350px;
+			right:0;
 		}
 
 		.recipe-input {

@@ -25,7 +25,6 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 
-	// Load data from localStorage on component mount
 	useEffect(() => {
 		const storedData = localStorageService.getRecipeData();
 		if (storedData) {
@@ -34,14 +33,12 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, []);
 
-	// Save to localStorage whenever recipe or userInput changes
 	useEffect(() => {
 		if (recipe !== null || userInput !== null) {
 			localStorageService.saveRecipeData(recipe, userInput);
 		}
 	}, [recipe, userInput]);
 
-	// Enhanced setter functions to handle localStorage
 	const handleSetUserInput = (input: RecipeInput | null) => {
 		setUserInput(input);
 	};
@@ -50,7 +47,6 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		setRecipe(newRecipe);
 	};
 
-	// Function to clear all recipe data
 	const clearRecipeData = () => {
 		setUserInput(null);
 		setRecipe(null);

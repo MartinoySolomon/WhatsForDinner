@@ -1,0 +1,15 @@
+.error {
+	h2 {
+		font-family: "roboto slab", serif;
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+	p {
+		font-family: "roboto slab", serif;
+		font-size: 2rem;
+	}
+	img {
+		width: 20%;
+		margin-top: 2rem;
+	}
+}

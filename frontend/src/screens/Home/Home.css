@@ -63,11 +63,13 @@
 		}
 	}
 }
+
 @media (max-width: 768px) {
 	.home-container {
 		grid-template-columns: 100%;
 		grid-template-rows: 22% 26% 10% 19% 19% ;
 		gap: 1%;
+		min-height: 840px;
 		.btn {
 			position: static;
 			width: 100%;
