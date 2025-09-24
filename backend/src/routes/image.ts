@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import { generateRecipeImage } from "../services/openai";
 
 export const imageRouter = express.Router();
 
@@ -132,7 +133,34 @@ const searchFoodImage = async (queries: string[], accessKey: string) => {
 	return null;
 };
 
-// GET /api/image?dish=Pizza
+// GET /api/image/generate - Generate AI image for recipe
+imageRouter.post("/generate", async (req, res) => {
+	const { name, description, cuisine } = req.body;
+
+	if (!name) {
+		return res.status(400).json({ error: "Missing 'name' in request body." });
+	}
+
+	try {
+		console.log(`Generating AI image for recipe: ${name}`);
+
+		const result = await generateRecipeImage(
+			name,
+			description || "",
+			cuisine || "international"
+		);
+
+		return res.json(result);
+	} catch (error: any) {
+		console.error("AI image generation error:", error.message || error);
+		return res.status(500).json({
+			error: "Failed to generate AI image.",
+			details: error.message || String(error),
+		});
+	}
+});
+
+// GET /api/image?dish=Pizza - Legacy Unsplash endpoint (keep for fallback)
 imageRouter.get("/", async (req, res) => {
 	const dish = req.query.dish;
 	if (!dish) {

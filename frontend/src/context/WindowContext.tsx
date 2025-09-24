@@ -4,7 +4,7 @@ const WindowContext = createContext<boolean | undefined>(undefined);
 export default WindowContext;
 export function WindowProvider({ children }: { children: React.ReactNode }) {
 	const { width } = useWindowDimensions();
-	const isDesktop = width >= 780;
+	const isDesktop = width >= 768;
 
 	return (
 		<WindowContext.Provider value={isDesktop}>

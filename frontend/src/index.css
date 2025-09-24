@@ -14,3 +14,9 @@ body {
 	max-width: 1400px;
 	margin: 0 auto;
 }
+
+/* Remove max-width constraint when loading */
+body.loading {
+	max-width: none;
+	margin: 0;
+}

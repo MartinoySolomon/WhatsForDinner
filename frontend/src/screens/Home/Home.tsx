@@ -1,9 +1,9 @@
 import "./Home.css";
 import logo from "../../assets/logo.png";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipe } from "../../api/recipeApi";
-import { fetchImage } from "../../api/imageApi";
+import { generateRecipeImage } from "../../api/imageApi";
 import useRecipe from "../../hooks/useRecipe";
 import Slider from "../../components/Slider/Slider";
 import Loader from "../../components/Loader/Loader";
@@ -42,6 +42,20 @@ export default function Home() {
 	} = useRecipe();
 	const navigate = useNavigate();
 
+	// Handle body class for loading state
+	useEffect(() => {
+		if (isLoading) {
+			document.body.classList.add("loading");
+		} else {
+			document.body.classList.remove("loading");
+		}
+
+		// Cleanup on unmount
+		return () => {
+			document.body.classList.remove("loading");
+		};
+	}, [isLoading]);
+
 	const getRecipe = async () => {
 		clearRecipeData();
 		setIsLoading(true);
@@ -58,7 +72,14 @@ export default function Home() {
 				setError("No recipe found");
 				throw new Error("No recipe found");
 			}
-			const newImage = await fetchImage(newRecipe.name);
+
+			// Use AI to generate a recipe-specific image
+			const newImage = await generateRecipeImage({
+				name: newRecipe.name,
+				description: newRecipe.description,
+				cuisine: newRecipe.cuisine,
+			});
+
 			if (!newImage) {
 				setError("No image found");
 				throw new Error("No image found");
@@ -87,6 +108,15 @@ export default function Home() {
 							/>
 						</div>
 					)}
+					{isDesktop && (
+						<div className="btn">
+							<img
+								src={logo}
+								alt="Logo"
+								onClick={getRecipe}
+							/>
+						</div>
+					)}
 					<div className="home-container">
 						<div className="input-item time">
 							<h3 className="input-header">
@@ -102,15 +132,15 @@ export default function Home() {
 
 							<CuisineWorldMap onSelectCuisine={setCuisine} />
 						</div>
-							{!isDesktop && (
-								<div className="btn">
-									<img
-										src={logoMobile}
-										alt="Logo"
-										onClick={getRecipe}
-									/>
-								</div>
-							)}
+						{!isDesktop && (
+							<div className="btn">
+								<img
+									src={logoMobile}
+									alt="Logo"
+									onClick={getRecipe}
+								/>
+							</div>
+						)}
 						<div className="input-item skill">
 							<h3 className="input-header">What's Your Skill Level?</h3>
 							<Slider

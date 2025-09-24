@@ -63,4 +63,5 @@ export const CUISINES = [
 export const API_BASE_URLS = {
 	RECIPE: "https://whatsfordinner-m0d2.onrender.com/api/recipe",
 	IMAGE: "https://whatsfordinner-m0d2.onrender.com/api/image?dish=",
+	AI_IMAGE: "https://whatsfordinner-m0d2.onrender.com/api/image/generate",
 };
