@@ -90,4 +90,7 @@
 			padding: 1rem;
 		}
 	}
+	.cooking-timer{
+		display: flex;
+	}
 }

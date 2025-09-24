@@ -10,7 +10,6 @@ export default function ClockTimePicker({
 	const [angle, setAngle] = useState(0);
 	const radius = isDesktop ? 100 : 50;
 	const center = isDesktop ? { x: 150, y: 150 } : { x: 65, y: 65 };
-
 	const handleDrag = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
 		const rect = e.currentTarget.getBoundingClientRect();
 		const x = e.clientX - rect.left - center.x;
