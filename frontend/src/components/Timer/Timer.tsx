@@ -70,8 +70,11 @@ const Timer: React.FC<TimerProps> = ({
 	const [isFinished, setIsFinished] = useState<boolean>(false);
 	const [totalSeconds, setTotalSeconds] = useState<number>(0);
 
-	// Initialize timer with initial values
+	// Update all timer values when initial props change
 	useEffect(() => {
+		setHours(initialHours);
+		setMinutes(initialMinutes);
+		setSeconds(initialSeconds);
 		if (initialHours > 0 || initialMinutes > 0 || initialSeconds > 0) {
 			setTotalSeconds(
 				initialHours * 3600 + initialMinutes * 60 + initialSeconds

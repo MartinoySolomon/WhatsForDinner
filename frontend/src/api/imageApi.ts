@@ -8,13 +8,11 @@ interface Recipe {
 	cuisine?: string;
 }
 
-// New AI image generation function
 export async function generateRecipeImage(
 	recipe: Recipe
 ): Promise<{ imageUrl: string }> {
 	if (USE_MOCK_RECIPE_API) {
-		// Simulate network delay
-		await new Promise((res) => setTimeout(res, 1000)); // Longer delay for AI generation simulation
+		await new Promise((res) => setTimeout(res, 1000)); 
 		return mockImage;
 	}
 
@@ -42,10 +40,8 @@ export async function generateRecipeImage(
 	}
 }
 
-// Legacy function for Unsplash (kept for fallback)
 export async function fetchImage(dish: string): Promise<{ imageUrl: string }> {
 	if (USE_MOCK_RECIPE_API) {
-		// Simulate network delay
 		await new Promise((res) => setTimeout(res, 200));
 		return mockImage;
 	}

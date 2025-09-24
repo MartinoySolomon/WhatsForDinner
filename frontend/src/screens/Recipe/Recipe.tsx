@@ -3,14 +3,20 @@ import Timer from "../../components/Timer/Timer";
 import useRecipe from "../../hooks/useRecipe";
 import Logo from "../../components/Logo/Logo";
 import Button from "../../components/Button/Button";
+import ErrorComponent from "../../components/Error/Error";
 export default function Recipe() {
 	const { recipe, error } = useRecipe();
 	console.log(recipe);
 
 	return (
 		<>
-			{error && <div className="error">{error}</div>}
-			{recipe && (
+			{error && (
+				<>
+					<Logo />
+					<ErrorComponent />
+				</>
+			)}
+			{recipe && !error && (
 				<div className="recipe">
 					<Logo />
 					<Button path="/result" />

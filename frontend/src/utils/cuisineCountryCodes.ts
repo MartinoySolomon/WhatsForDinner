@@ -177,5 +177,4 @@ export const CUISINE_COUNTRY_CODES = [
 	{ country: "MH", cuisine: "Pacific" },
 	{ country: "FM", cuisine: "Pacific" },
 	{ country: "PW", cuisine: "Pacific" },
-	// Default: assign all other countries to "International" for simplicity
 ];

@@ -40,14 +40,7 @@ export default function CuisineWorldMap({
 					cursor: allowedCountries.has(countryCode) ? "pointer" : "not-allowed",
 					opacity: allowedCountries.has(countryCode) ? 1 : 0.3,
 				})}
-				tooltipTextFunction={({ countryCode }) => {
-					const cuisineObj = CUISINE_COUNTRY_CODES.find(
-						(c) => c.country === countryCode
-					);
-					return cuisineObj
-						? `${cuisineObj.cuisine} (${countryCode})`
-						: countryCode;
-				}}
+				tooltipTextFunction={() => ""}
 			/>
 		</>
 	);
