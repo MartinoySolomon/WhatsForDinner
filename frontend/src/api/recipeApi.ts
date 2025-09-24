@@ -4,11 +4,10 @@ import { API_BASE_URLS } from "../utils/constants";
 import { mockRecipe } from "./mockRecipe";
 
 // Toggle this to true to use mock data
-export const USE_MOCK_RECIPE_API = true;
+export const USE_MOCK_RECIPE_API = false;
 
 export async function fetchRecipe(input: RecipeInput): Promise<Recipe> {
 	if (USE_MOCK_RECIPE_API) {
-		// Simulate network delay
 		await new Promise((res) => setTimeout(res, 3000));
 		return mockRecipe;
 	}

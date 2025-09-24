@@ -38,7 +38,22 @@ export default function Recipe() {
 							))}
 						</ol>
 					</div>
-					<Timer />
+					<div className="cooking-timer">
+						<div className="cooking-timer-item">
+							<h4>Prepping Time</h4>
+							<Timer
+								initialHours={Math.floor(recipe.prepTime / 60)}
+								initialMinutes={recipe.prepTime % 60}
+							/>
+						</div>
+						<div className="cooking-timer-item">
+							<h4>Cooking Time</h4>
+							<Timer
+								initialHours={Math.floor(recipe.cookTime / 60)}
+								initialMinutes={recipe.cookTime % 60}
+							/>
+						</div>
+					</div>
 				</div>
 			)}
 		</>
