@@ -36,43 +36,89 @@ export async function generateRecipe({
 		apiKey: process.env.OPENAI_API_KEY,
 	});
 
-	// Build the prompt for OpenAI with exact JSON format specification
-	const prompt = `Suggest a dinner recipe based on these preferences:
-Skill level: ${skill} (1-5 scale, where 1 is easy, 5 is advanced)
-Taste vs Nutrition balance: ${taste} (1-5 scale, where 1 is healthy, 5 is tasty)
-Cuisine: ${cuisine}
-Time available: ${time} in minutes
+	// Create a more detailed and varied prompt with randomization elements
+	const skillDescriptions = {
+		1: "very easy - minimal cooking skills required, simple techniques",
+		2: "easy - basic cooking skills, simple preparation methods",
+		3: "intermediate - moderate cooking skills, some techniques required",
+		4: "advanced - good cooking skills, complex techniques and timing",
+		5: "expert - professional level skills, advanced techniques and precision",
+	};
 
-You must return ONLY a valid JSON object with this exact structure:
+	const tasteDescriptions = {
+		1: "extremely healthy and nutritious - focus on whole foods, low calories, high nutrients",
+		2: "mostly healthy - balanced nutrition with some flavor compromises",
+		3: "balanced - good mix of nutrition and taste",
+		4: "indulgent - prioritize flavor with some nutritional value",
+		5: "maximum flavor - rich, decadent, comfort food focused",
+	};
+
+	// Add randomization to prevent repetitive results
+	const creativityPrompts = [
+		"Create a unique twist on a classic dish.",
+		"Suggest something unexpected and creative.",
+		"Focus on fresh, seasonal ingredients.",
+		"Make it restaurant-quality but achievable at home.",
+		"Include interesting flavor combinations.",
+		"Make it Instagram-worthy and delicious.",
+	];
+	const randomCreativity =
+		creativityPrompts[Math.floor(Math.random() * creativityPrompts.length)];
+
+	const prompt = `Create a unique ${cuisine} dinner recipe with these specific requirements:
+
+SKILL LEVEL: ${skill}/5 - ${
+		skillDescriptions[skill as keyof typeof skillDescriptions]
+	}
+TASTE/NUTRITION: ${taste}/5 - ${
+		tasteDescriptions[taste as keyof typeof tasteDescriptions]
+	}  
+CUISINE: ${cuisine}
+TIME CONSTRAINT: Total cooking time (prep + cook) must be EXACTLY within ${time} minutes or less
+CREATIVITY: ${randomCreativity}
+
+CRITICAL REQUIREMENTS:
+- Skill level ${skill} means the recipe complexity must match exactly (not easier or harder)
+- Time constraint of ${time} minutes is MANDATORY - prepTime + cookTime ≤ ${time}
+- Taste/nutrition balance of ${taste} must be reflected in ingredient choices and cooking methods
+- Must be authentic to ${cuisine} cuisine style
+- Make it varied and unique - avoid common/repetitive recipes
+
+Return ONLY a valid JSON object with this exact structure:
 {
-  "name": "Recipe Name",
-  "description": "Brief description of the dish",
+  "name": "Unique Recipe Name",
+  "description": "Detailed description highlighting why this matches the skill level and taste preference",
   "ingredients": [
-    {"name": "ingredient name", "quantity": "amount with unit"}
+    {"name": "specific ingredient name", "quantity": "exact amount with unit"}
   ],
-  "instructions": ["step 1", "step 2", "step 3"],
+  "instructions": ["detailed step 1 with specific techniques", "step 2", "step 3", "etc"],
   "cuisine": "${cuisine}",
   "prepTime": number_in_minutes,
-  "cookTime": number_in_minutes,
+  "cookTime": number_in_minutes, 
   "skillLevel": ${skill},
   "nutrition": ${taste},
   "imageUrl": ""
-}
-
-Ensure prepTime + cookTime does not exceed ${time} in minutes. Return only the JSON object, no additional text.`;
+}`;
 
 	const response = await openai.chat.completions.create({
-		model: "gpt-3.5-turbo",
+		model: "gpt-4o-mini", // Better model than gpt-3.5-turbo, good balance of quality and cost
 		messages: [
 			{
 				role: "system",
-				content:
-					"You are a helpful chef assistant. Always respond with valid JSON only, no markdown or additional text.",
+				content: `You are a professional chef and culinary expert. You create diverse, authentic recipes that precisely match the requested parameters. Always respond with valid JSON only, no markdown or additional text. 
+
+Key principles:
+- STRICTLY follow time constraints - prepTime + cookTime must not exceed the given time limit
+- Match skill level exactly - don't make recipes easier or harder than requested  
+- Reflect the taste/nutrition balance accurately in ingredient choices
+- Create varied, unique recipes - avoid repetition
+- Ensure authenticity to the requested cuisine
+- Include specific techniques appropriate for the skill level`,
 			},
 			{ role: "user", content: prompt },
 		],
-		temperature: 0.7,
-		max_tokens: 800,
+		temperature: 0.8, // Slightly higher for more creativity and variation
+		max_tokens: 1500, // Nearly double the tokens for more detailed recipes
 		response_format: { type: "json_object" },
 	});
 
@@ -107,6 +153,31 @@ Ensure prepTime + cookTime does not exceed ${time} in minutes. Return only the J
 		// Ensure imageUrl exists (set to empty string if not provided)
 		if (!recipe.imageUrl) {
 			recipe.imageUrl = "";
+		}
+
+		// Validate time constraints are met
+		const totalTime = (recipe.prepTime || 0) + (recipe.cookTime || 0);
+		if (totalTime > time) {
+			console.warn(
+				`Recipe time (${totalTime}min) exceeds limit (${time}min), regenerating...`
+			);
+			return {
+				error: `Recipe time exceeds limit. Total time: ${totalTime} minutes, limit: ${time} minutes. Please try again.`,
+			};
+		}
+
+		// Validate skill level matches
+		if (recipe.skillLevel !== skill) {
+			console.warn(
+				`Recipe skill level (${recipe.skillLevel}) doesn't match requested (${skill})`
+			);
+		}
+
+		// Validate nutrition/taste level matches
+		if (recipe.nutrition !== taste) {
+			console.warn(
+				`Recipe nutrition level (${recipe.nutrition}) doesn't match requested (${taste})`
+			);
 		}
 
 		// Validate ingredients format
