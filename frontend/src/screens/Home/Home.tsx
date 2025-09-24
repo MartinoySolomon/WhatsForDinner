@@ -28,11 +28,19 @@ export default function Home() {
 	);
 	const [cuisine, setCuisine] = useState(CUISINES[0]);
 	const [time, setTime] = useState(10);
-	const { setRecipe, setUserInput, isLoading, setIsLoading, error, setError } =
-		useRecipe();
+	const {
+		setRecipe,
+		setUserInput,
+		isLoading,
+		setIsLoading,
+		error,
+		setError,
+		clearRecipeData,
+	} = useRecipe();
 	const navigate = useNavigate();
 
 	const getRecipe = async () => {
+		clearRecipeData();
 		setIsLoading(true);
 		const input = {
 			skill: skillLevel,
@@ -77,14 +85,16 @@ export default function Home() {
 					<div className="home-container">
 						<div className="input-item time">
 							<h3 className="input-header">
-							How much time do you have?
-							<span className="subtext">{`${Math.floor(time / 60)}h ${time % 60}min`}</span>	
-								</h3>
+								How much time do you have?
+								<span className="subtext">{`${Math.floor(time / 60)}h ${
+									time % 60
+								}min`}</span>
+							</h3>
 							<ClockTimePicker setTime={setTime} />
 						</div>
 						<div className="input-item cuisine">
 							<h3 className="input-header">{cuisine} Cuisine</h3>
-							
+
 							<CuisineWorldMap onSelectCuisine={setCuisine} />
 						</div>
 						<div className="input-item skill">
@@ -98,9 +108,18 @@ export default function Home() {
 								valueOptions={SKILL_LEVELS.map((level) => level.name)}
 							/>
 							<div className="icon-bar">
-								<img src={egg} alt="egg"/>
-								<img src={knife} alt="knife"/>
-								<img src={baker} alt="chef"/>
+								<img
+									src={egg}
+									alt="egg"
+								/>
+								<img
+									src={knife}
+									alt="knife"
+								/>
+								<img
+									src={baker}
+									alt="chef"
+								/>
 							</div>
 						</div>
 						<div className="input-item flavor">
@@ -114,9 +133,18 @@ export default function Home() {
 								valueOptions={FLAVOR_PREFERENCES.map((flavor) => flavor.name)}
 							/>
 							<div className="icon-bar">
-								<img src={salad} alt="salad"/>
-								<img src={meal} alt="meal"/>
-								<img src={pizza} alt="pizza"/>
+								<img
+									src={salad}
+									alt="salad"
+								/>
+								<img
+									src={meal}
+									alt="meal"
+								/>
+								<img
+									src={pizza}
+									alt="pizza"
+								/>
 							</div>
 						</div>
 					</div>

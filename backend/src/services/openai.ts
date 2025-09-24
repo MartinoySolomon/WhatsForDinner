@@ -38,7 +38,7 @@ export async function generateRecipe({
 
 	// Build the prompt for OpenAI with exact JSON format specification
 	const prompt = `Suggest a dinner recipe based on these preferences:
-Skill level: ${skill} (1-5 scale)
+Skill level: ${skill} (1-5 scale, where 1 is easy, 5 is advanced)
 Taste vs Nutrition balance: ${taste} (1-5 scale, where 1 is healthy, 5 is tasty)
 Cuisine: ${cuisine}
 Time available: ${time} in minutes
