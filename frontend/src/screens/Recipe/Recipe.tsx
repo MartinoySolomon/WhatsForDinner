@@ -2,6 +2,7 @@ import "./Recipe.css";
 import Timer from "../../components/Timer/Timer";
 import useRecipe from "../../hooks/useRecipe";
 import Logo from "../../components/Logo/Logo";
+import Button from "../../components/Button/Button";
 export default function Recipe() {
 	const { recipe, error } = useRecipe();
 	console.log(recipe);
@@ -12,6 +13,7 @@ export default function Recipe() {
 			{recipe && (
 				<div className="recipe">
 					<Logo />
+					<Button path="/result" />
 					<div className="recipe-title">
 						<h2>{recipe.name}</h2>
 						<p>{recipe.description}</p>

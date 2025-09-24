@@ -93,10 +93,12 @@
 		.recipe-card-content {
 			flex-direction: column;
 			padding: 0.5rem;
-			justify-content: space-around;
+			justify-content: space-between;
 			.recipe-ingredients {
 				width: 100%;
 				margin: 0.5rem 0;
+				flex-grow: 1;
+				justify-content: space-evenly;
 				h3 {
 					font-size: 1rem;
 				}
@@ -108,13 +110,14 @@
 			.recipe-img {
 				order: -1;
 				width: 100%;
+				min-height: 33%;
 			}
 		}
 		.start-btn {
 			width: 40%;
 			min-width: 200px;
 			max-width: 350px;
-			top: 35%;
+			top: 37%;
 		}
 
 		.recipe-input {

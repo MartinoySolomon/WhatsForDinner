@@ -5,6 +5,7 @@ import start from "../../assets/start-btn.png";
 import { SKILL_LEVELS } from "../../utils/constants";
 import { FLAVOR_PREFERENCES } from "../../utils/constants";
 import Logo from "../../components/Logo/Logo";
+import Button from "../../components/Button/Button";
 export default function Result() {
 	const navigate = useNavigate();
 
@@ -15,7 +16,8 @@ export default function Result() {
 			{error && <div className="error">{error}</div>}
 			{recipe && (
 				<div className="recipe-card">
-				<Logo/>
+					<Logo />
+					<Button path="/" />
 					<div className="recipe-title">
 						<h2>{recipe.name}</h2>
 						<p>{recipe.description}</p>
@@ -75,7 +77,6 @@ export default function Result() {
 							<h3>{`${Math.floor((recipe.cookTime + recipe.prepTime) / 60)}h ${
 								(recipe.cookTime + recipe.prepTime) % 60
 							}min`}</h3>
-
 						</div>
 					</div>
 				</div>
