@@ -1,33 +1,65 @@
 import "./Home.css";
 import logo from "../../assets/logo.png";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipe } from "../../api/recipeApi";
-import { fetchImage } from "../../api/imageApi";
+import { generateRecipeImage } from "../../api/imageApi";
 import useRecipe from "../../hooks/useRecipe";
 import Slider from "../../components/Slider/Slider";
 import Loader from "../../components/Loader/Loader";
+import baker from "../../assets/baker.png";
+import egg from "../../assets/fried-egg.png";
+import knife from "../../assets/french-knife.png";
+import salad from "../../assets/salad.png";
+import pizza from "../../assets/pizza.png";
+import meal from "../../assets/meal.png";
+import logoMobile from "../../assets/logo-mobile.png";
 import {
-  SKILL_LEVELS,
-  FLAVOR_PREFERENCES,
-  CUISINES,
+	SKILL_LEVELS,
+	FLAVOR_PREFERENCES,
+	CUISINES,
 } from "../../utils/constants";
 import ClockTimePicker from "../../components/ClockTimePicker/ClockTimePicker";
 import CuisineWorldMap from "../../components/CuisineWorldMap/CuisineWorldMap";
+import WindowContext from "../../context/WindowContext";
+import Logo from "../../components/Logo/Logo";
+import ErrorComponent from "../../components/Error/Error";
 
 export default function Home() {
-
+	const isDesktop = useContext(WindowContext);
 	const [skillLevel, setSkillLevel] = useState(SKILL_LEVELS[0].id);
 	const [flavorPreference, setFlavorPreference] = useState(
 		FLAVOR_PREFERENCES[0].id
 	);
 	const [cuisine, setCuisine] = useState(CUISINES[0]);
 	const [time, setTime] = useState(10);
-	const { setRecipe, setUserInput, isLoading, setIsLoading, error, setError } =
-		useRecipe();
+	const {
+		setRecipe,
+		setUserInput,
+		isLoading,
+		setIsLoading,
+		error,
+		setError,
+		clearRecipeData,
+	} = useRecipe();
 	const navigate = useNavigate();
+	useEffect(() => {
+		if (isLoading) {
+			document.body.classList.add("loading");
+		} else {
+			document.body.classList.remove("loading");
+		}
+
+		return () => {
+			document.body.classList.remove("loading");
+		};
+	}, [isLoading]);
 
 	const getRecipe = async () => {
+		clearRecipeData();
+		setRecipe(null);
+		setUserInput(null);
+		setError(null);
 		setIsLoading(true);
 		const input = {
 			skill: skillLevel,
@@ -39,19 +71,27 @@ export default function Home() {
 		try {
 			const newRecipe = await fetchRecipe(input);
 			if (!newRecipe) {
-				setError("No recipe found");
 				throw new Error("No recipe found");
 			}
-			const newImage = await fetchImage(newRecipe.name);
+			const newImage = await generateRecipeImage({
+				name: newRecipe.name,
+				description: newRecipe.description,
+				cuisine: newRecipe.cuisine,
+			});
+
 			if (!newImage) {
-				setError("No image found");
 				throw new Error("No image found");
 			}
 			setRecipe({ ...newRecipe, imageUrl: newImage.imageUrl });
-		} catch (error) {
-			console.error("Error in handleClick:", error);
-		} finally {
 			navigate("/result");
+		} catch (err: any) {
+			console.error("Error in getRecipe:", err);
+			let errorMessage = "An unexpected error occurred. Please try again.";
+			if (err instanceof Error) {
+				errorMessage = err.message;
+			}
+			setError(errorMessage);
+		} finally {
 			setIsLoading(false);
 		}
 	};
@@ -59,10 +99,15 @@ export default function Home() {
 	return (
 		<>
 			{isLoading && <Loader />}
-			{error && <p className="error">{error}</p>}
-			{!isLoading && (
+			{error && (
 				<>
-					<div className="home-container">
+					<Logo />
+					<ErrorComponent />
+				</>
+			)}
+			{!isLoading && !error && (
+				<>
+					{isDesktop && (
 						<div className="btn">
 							<img
 								src={logo}
@@ -70,8 +115,42 @@ export default function Home() {
 								onClick={getRecipe}
 							/>
 						</div>
-						<div className="skill-level-input">
-							<h3 className="input-header">Set Skill Level</h3>
+					)}
+					{isDesktop && (
+						<div className="btn">
+							<img
+								src={logo}
+								alt="Logo"
+								onClick={getRecipe}
+							/>
+						</div>
+					)}
+					<div className="home-container">
+						<div className="input-item time">
+							<h3 className="input-header">
+								How much time do you have?
+								<span className="subtext">{`${Math.floor(time / 60)}h ${
+									time % 60
+								}min`}</span>
+							</h3>
+							<ClockTimePicker setTime={setTime} />
+						</div>
+						<div className="input-item cuisine">
+							<h3 className="input-header">{cuisine} Cuisine</h3>
+
+							<CuisineWorldMap onSelectCuisine={setCuisine} />
+						</div>
+						{!isDesktop && (
+							<div className="btn">
+								<img
+									src={logoMobile}
+									alt="Logo"
+									onClick={getRecipe}
+								/>
+							</div>
+						)}
+						<div className="input-item skill">
+							<h3 className="input-header">What's Your Skill Level?</h3>
 							<Slider
 								min={1}
 								max={SKILL_LEVELS.length}
@@ -80,9 +159,23 @@ export default function Home() {
 								step={1}
 								valueOptions={SKILL_LEVELS.map((level) => level.name)}
 							/>
+							<div className="icon-bar">
+								<img
+									src={egg}
+									alt="egg"
+								/>
+								<img
+									src={knife}
+									alt="knife"
+								/>
+								<img
+									src={baker}
+									alt="chef"
+								/>
+							</div>
 						</div>
-						<div className="flavor-input">
-							<h3 className="input-header">Set Flavor Preference</h3>
+						<div className="input-item flavor">
+							<h3 className="input-header">Feeling healthy or indulgent?</h3>
 							<Slider
 								min={1}
 								max={FLAVOR_PREFERENCES.length}
@@ -91,30 +184,24 @@ export default function Home() {
 								step={1}
 								valueOptions={FLAVOR_PREFERENCES.map((flavor) => flavor.name)}
 							/>
-						</div>
-						<div className="cuisine-input">
-							<h3 className="input-header">Set Cuisine</h3>
-							<select
-								value={cuisine}
-								onChange={(e) => setCuisine(e.target.value)}>
-								{CUISINES.map((cuisine) => (
-									<option
-										key={cuisine}
-										value={cuisine}>
-										{cuisine}
-									</option>
-								))}
-							</select>
-							<CuisineWorldMap onSelectCuisine={setCuisine} />
-						</div>
-						<div className="time-input">
-							<h3 className="input-header">Set Preparation Time</h3>
-							<ClockTimePicker setTime={setTime} />
+							<div className="icon-bar">
+								<img
+									src={salad}
+									alt="salad"
+								/>
+								<img
+									src={meal}
+									alt="meal"
+								/>
+								<img
+									src={pizza}
+									alt="pizza"
+								/>
+							</div>
 						</div>
 					</div>
 				</>
 			)}
 		</>
 	);
-
 }

@@ -1,30 +1,70 @@
 import "./Recipe.css";
 import Timer from "../../components/Timer/Timer";
 import useRecipe from "../../hooks/useRecipe";
-
-import { useNavigate } from "react-router-dom";
+import Logo from "../../components/Logo/Logo";
+import Button from "../../components/Button/Button";
+import ErrorComponent from "../../components/Error/Error";
 export default function Recipe() {
-  const navigate = useNavigate();
 
-  const { recipe } = useRecipe();
-  console.log(recipe);
+	const { recipe, error } = useRecipe();
+	console.log(recipe);
 
-  return (
-    <div className="Recipe">
-      <h1>Your Recipe</h1>
-      <h2>Preperation:</h2>
-
-        <div>Timer</div>
-        <Timer />
-        <h2>Cooking:</h2>
-        <p>{recipe?.instructions}</p>
-        <h2>Baking:</h2>
-
-
-        <button className="back-button" onClick={() => {navigate("/")}}>Finished, Go Back to Home Page</button>
-
-
-      </div>
-    </>
-  );
+	return (
+		<>
+			{error && (
+				<>
+					<Logo />
+					<ErrorComponent />
+				</>
+			)}
+			{recipe && !error && (
+				<div className="recipe">
+					<Logo />
+					<Button path="/result" />
+					<div className="recipe-title">
+						<h2>{recipe.name}</h2>
+						<p>{recipe.description}</p>
+					</div>
+					<div className="recipe-content">
+						<div className="recipe-ingredients">
+							<h3>Ingredients</h3>
+							{recipe.ingredients.map((ingredient, index) => (
+								<div
+									className="ingredient"
+									key={index}>
+									<b>{ingredient.name}</b> <i>{ingredient.quantity}</i>
+								</div>
+							))}
+						</div>
+						<ol className="recipe-instructions">
+							<h3>Instructions</h3>
+							{recipe.instructions.map((step, index) => (
+								<li
+									key={index}
+									className="instruction">
+									{step}
+								</li>
+							))}
+						</ol>
+					</div>
+					<div className="cooking-timer">
+						<div className="cooking-timer-item">
+							<h4>Prepping Time</h4>
+							<Timer
+								initialHours={Math.floor(recipe.prepTime / 60)}
+								initialMinutes={recipe.prepTime % 60}
+							/>
+						</div>
+						<div className="cooking-timer-item">
+							<h4>Cooking Time</h4>
+							<Timer
+								initialHours={Math.floor(recipe.cookTime / 60)}
+								initialMinutes={recipe.cookTime % 60}
+							/>
+						</div>
+					</div>
+				</div>
+			)}
+		</>
+	);
 }

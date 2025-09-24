@@ -1,14 +1,15 @@
-import { useState,useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import "./ClockTimePicker.css";
+import WindowContext from "../../context/WindowContext";
 export default function ClockTimePicker({
 	setTime,
 }: {
 	setTime: (time: number) => void;
 }) {
+	const isDesktop = useContext(WindowContext);
 	const [angle, setAngle] = useState(0);
-	const radius = 120;
-	const center = { x: 150, y: 150 };
-
+	const radius = isDesktop ? 100 : 50;
+	const center = isDesktop ? { x: 150, y: 150 } : { x: 65, y: 65 };
 	const handleDrag = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
 		const rect = e.currentTarget.getBoundingClientRect();
 		const x = e.clientX - rect.left - center.x;
@@ -34,20 +35,17 @@ export default function ClockTimePicker({
 	const handY = center.y - handLength * Math.cos(rad);
 
 	return (
-		<div className="flex flex-col items-center justify-center p-4">
+		<div className="clock-time-picker">
 			<svg
-				width="300"
-				height="300"
 				onMouseMove={(e) => e.buttons === 1 && handleDrag(e)}
-				onMouseDown={handleDrag}
-				className="cursor-pointer">
+				onMouseDown={handleDrag}>
 				{/* Clock face */}
 				<circle
 					cx={center.x}
 					cy={center.y}
 					r={radius}
-					stroke="var(--grey-color"
-					strokeWidth="4"
+					stroke="var(--grey-color)"
+					strokeWidth={isDesktop ? 5 : 2}
 					fill="var(--secondary-color)"
 				/>
 
@@ -66,7 +64,7 @@ export default function ClockTimePicker({
 							x2={x2}
 							y2={y2}
 							stroke="black"
-							strokeWidth="3"
+							strokeWidth={isDesktop ? 4 : 1}
 						/>
 					);
 				})}
@@ -78,7 +76,7 @@ export default function ClockTimePicker({
 					x2={handX}
 					y2={handY}
 					stroke="var(--text-color)"
-					strokeWidth="8"
+					strokeWidth={isDesktop ? 10 : 5}
 					strokeLinecap="round"
 				/>
 
@@ -86,13 +84,10 @@ export default function ClockTimePicker({
 				<circle
 					cx={center.x}
 					cy={center.y}
-					r="6"
+					r={isDesktop ? 8 : 4}
 					fill="black"
 				/>
 			</svg>
-			<p>
-				Selected Time: {hours}h {minutes}m
-			</p>
 		</div>
 	);
 }

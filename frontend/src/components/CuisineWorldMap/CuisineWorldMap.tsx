@@ -1,8 +1,8 @@
-// import React from "react";
 import { WorldMap } from "react-svg-worldmap";
 import { CUISINE_COUNTRY_CODES } from "../../utils/cuisineCountryCodes";
-
-// Prepare data for react-svg-worldmap
+import "./CuisineWorldMap.css";
+import { useContext } from "react";
+import WindowContext from "../../context/WindowContext";
 const data = CUISINE_COUNTRY_CODES.map(({ country, cuisine }) => ({
 	country,
 	value: 1,
@@ -16,7 +16,7 @@ export default function CuisineWorldMap({
 }) {
 	// Only allow selection for countries in our list
 	const allowedCountries = new Set(CUISINE_COUNTRY_CODES.map((c) => c.country));
-
+	const isDesktop = useContext(WindowContext);
 	function handleCountryClick(event: { countryCode: string }) {
 		const countryCode = event.countryCode;
 		const cuisineObj = CUISINE_COUNTRY_CODES.find(
@@ -28,25 +28,20 @@ export default function CuisineWorldMap({
 	}
 
 	return (
-		<div style={{ maxWidth: 600, margin: "0 auto" }}>
+		<>
 			<WorldMap
-				color="#dfb475ff"
-				valueSuffix=""
-				size="responsive"
+				size={isDesktop ? "lg" : "sm"}
 				data={data}
 				onClickFunction={handleCountryClick}
 				styleFunction={({ countryCode }) => ({
-					fill: allowedCountries.has(countryCode) ? "#b39b77ff" : "#323da0ff",
+					fill: allowedCountries.has(countryCode)
+						? "var(--primary-color)"
+						: "var(--primary-color)",
 					cursor: allowedCountries.has(countryCode) ? "pointer" : "not-allowed",
 					opacity: allowedCountries.has(countryCode) ? 1 : 0.3,
 				})}
-				tooltipTextFunction={({ countryCode }) => {
-					const cuisineObj = CUISINE_COUNTRY_CODES.find(
-						(c) => c.country === countryCode
-					);
-					return cuisineObj ? cuisineObj.cuisine : "";
-				}}
+				tooltipTextFunction={() => ""}
 			/>
-		</div>
+		</>
 	);
 }

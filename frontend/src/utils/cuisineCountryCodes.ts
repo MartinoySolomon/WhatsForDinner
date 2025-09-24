@@ -32,18 +32,18 @@ export const CUISINE_COUNTRY_CODES = [
 	{ country: "PY", cuisine: "Argentinian" },
 	{ country: "BO", cuisine: "Bolivian" },
 	{ country: "SR", cuisine: "Caribbean" },
-	{ country: "GF", cuisine: "French" },
 	// Europe
 	{ country: "IT", cuisine: "Italian" },
 	{ country: "FR", cuisine: "French" },
+	{ country: "GF", cuisine: "French" },
+	{ country: "CH", cuisine: "French" },
+	{ country: "BE", cuisine: "French" },
+	{ country: "LU", cuisine: "French" },
 	{ country: "ES", cuisine: "Spanish" },
 	{ country: "PT", cuisine: "Portuguese" },
 	{ country: "DE", cuisine: "German" },
 	{ country: "AT", cuisine: "German" },
-	{ country: "CH", cuisine: "French" },
-	{ country: "BE", cuisine: "French" },
 	{ country: "NL", cuisine: "Dutch" },
-	{ country: "LU", cuisine: "French" },
 	{ country: "IE", cuisine: "British" },
 	{ country: "GB", cuisine: "British" },
 	{ country: "DK", cuisine: "Nordic" },
@@ -177,5 +177,4 @@ export const CUISINE_COUNTRY_CODES = [
 	{ country: "MH", cuisine: "Pacific" },
 	{ country: "FM", cuisine: "Pacific" },
 	{ country: "PW", cuisine: "Pacific" },
-	// Default: assign all other countries to "International" for simplicity
 ];

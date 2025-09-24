@@ -1,168 +1,124 @@
-.Timer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: fit-content;
+.timer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	.timer-display {
+    height:7.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+    justify-content: center;
+		background: transparent;
+		padding: 1rem 3rem;
+		.time-pickers {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+			.time-picker-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				.time-picker {
+					width: 4.375rem;
+					height: 4.0625rem;
+					overflow-y: scroll;
+					scroll-snap-type: y mandatory;
+					-ms-overflow-style: none; /* IE and Edge */
+					scrollbar-width: none; /* Firefox */
+					border: 2px solid var(--primary-color);
+					border-radius: 0.6rem;
+					position: relative;
+					box-sizing: content-box;
+					background-color: var(--background-color);
+					.time-item {
+						height: 1.875rem;
+						line-height: 1.875rem;
+						text-align: center;
+						font-size: 1.2rem;
+						color: var(--grey-color);
+						transition: color 0.3s, font-size 0.3s;
+						scroll-snap-align: center;
+					}
+					.time-item.active {
+						color: var(--text-color);
+						font-weight: var(--font-weight-bold);
+						font-size: 1.5rem;
+					}
+				}
+				.time-picker::-webkit-scrollbar {
+					display: none;
+				}
+				.time-picker::before,
+				.time-picker::after {
+					content: "";
+					display: block;
+					height: 1.875rem; /* Padding for active item to be in the center */
+				}
+				.time-label {
+					margin-top: 0.4rem;
+					font-size: 0.9rem;
+					color: var(--secondary-color);
+				}
+			}
+			.colon {
+				font-size: 2rem;
+				color: var(--text-color);
+			}
+		}
+		.countdown {
+			font-size: 3rem;
+			font-weight: var(--font-weight-bold);
+			letter-spacing: 2px;
+			.countdown-item {
+				display: inline-block;
+				min-width: 3.75rem;
+				text-align: center;
+			}
+		}
+	}
+	.controls {
+		display: flex;
+		gap: 1.2rem;
 
-  /* font-family: Arial, sans-serif; */
-  /* min-height: 100vh; */
-  /* background-color: #f0f2f5;
-  color: #333; */
-}
+		.button {
+			padding: 0.6rem 1.2rem;
+			font-size: 1.1em;
+			font-weight: bold;
+			color: var(--background-color);
+			background-color: var(--secondary-color);
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.1s;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
 
-/* .title {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #555;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-} */
+		.button:hover {
+			background-color: var(--primary-color);
+		}
 
-.timer-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  background-color: #ac4e3a;
-  width: fit-content;
-  padding: 20px 40px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+		.button:active {
+			transform: scale(0.9);
+		}
+	}
+	.finished-message {
+		margin-top: 1.2rem;
+		font-size: 1.5em;
+		font-weight: bold;
+		animation: pulse 1s infinite;
+	}
 
-.time-pickers {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #ac4e3a;
-}
-
-.time-picker-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ac4e3a;
-}
-
-.time-picker {
-  width: 70px;
-  height: 65px;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  border: 2px solid #a46e6e;
-  border-radius: 10px;
-  position: relative;
-  box-sizing: content-box;
-}
-
-.time-picker::-webkit-scrollbar {
-  display: none;
-}
-
-.time-item {
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  font-size: 1.2em;
-  color: #999999;
-  transition: color 0.3s, font-size 0.3s;
-  scroll-snap-align: center;
-}
-
-.time-picker::before,
-.time-picker::after {
-  content: "";
-  display: block;
-  height: 30px; /* Padding for active item to be in the center */
-}
-
-.time-item.active {
-  color: #333;
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-.time-label {
-  margin-top: 5px;
-  font-size: 0.9em;
-  color: #da9f92;
-  background-color: #ac4e3a;
-}
-
-.colon {
-  font-size: 2em;
-  color: #555555;
-  align-self: flex-start;
-  line-height: 90px;
-  background-color: #ac4e3a;
-}
-
-.countdown {
-  font-size: 3em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #007bff;
-}
-
-.countdown-item {
-  display: inline-block;
-  min-width: 60px;
-  text-align: center;
-}
-
-.controls {
-  display: flex;
-  gap: 20px;
-}
-
-.button {
-  padding: 12px 25px;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: #fff;
-  background-color: #ce7902;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.button:hover {
-  background-color: #ba6d01;
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.button.reset {
-  background-color: #dc3a04;
-}
-
-.button.reset:hover {
-  background-color: #cb3604;
-}
-
-.finished-message {
-  margin-top: 20px;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #c02f1b;
-  animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(1);
+	}
 }

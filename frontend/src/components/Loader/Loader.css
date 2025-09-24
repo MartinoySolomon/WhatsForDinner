@@ -12,3 +12,11 @@
 			hue-rotate(304deg) brightness(79%) contrast(99%);
 	}
 }
+@media (max-width: 768px) {
+	.loader {
+		overflow: hidden;
+		img {
+			width: 120%;
+		}
+	}
+}

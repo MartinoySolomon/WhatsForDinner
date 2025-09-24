@@ -1,17 +1,98 @@
-.Recipe {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.recipe {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	align-items: center;
+	.recipe-title {
+		font-size: 1.2rem;
+		h2,
+		p {
+			font-family: "Roboto Slab", serif;
+			padding: 0 1rem;
+		}
+	}
+	.recipe-content {
+		display: flex;
+		padding: 2rem;
+		width: 100%;
+		.recipe-ingredients {
+			width: 40%;
+		}
+		.recipe-instructions {
+			width: 60%;
+		}
+		.recipe-ingredients,
+		.recipe-instructions {
+			display: flex;
+			flex-direction: column;
+			h3 {
+				align-self: flex-start;
+				font-family: "Roboto Slab", serif;
+				font-size: 1.2rem;
+				text-align: left !important;
+				margin-bottom: 1rem;
+			}
+			.ingredient,
+			.instruction {
+				text-align: left !important;
+				padding: 0.5rem 0;
+				width: 100%;
+			}
+			.ingredient {
+				border-bottom: 2px solid var(--grey-color);
+				width: 80%;
+			}
+			.instruction {
+				border-bottom: 2px solid var(--primary-color);
+				list-style-type: decimal;
+				margin: 0.5rem 0;
+			}
+		}
+	}
+	.cooking-timer {
+		display: flex;
+	}
 }
 
-.back-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #ac4e3a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+@media (max-width: 768px) {
+	.recipe {
+		.recipe-title {
+			h2 {
+				font-size: 1.1rem;
+			}
+			p {
+				font-size: 0.9rem;
+			}
+		}
+		.recipe-content {
+			padding: 1rem;
+			flex-direction: column;
+			align-items: center;
+			.recipe-ingredients,
+			.recipe-instructions {
+				margin: 0.5rem 0;
+				width: 90%;
+				h3 {
+					font-size: 1rem;
+					margin-bottom: 0.5rem;
+				}
+				.ingredient,
+				.instruction {
+					font-size: 0.85rem;
+					padding: 0.3rem 0;
+				}
+			}
+		}
+		.cooking-timer {
+			flex-direction: column;
+			gap: 1.4rem;
+			padding: 1rem;
+		}
+	}
+	.cooking-timer{
+		display: flex;
+	}
+
 }
