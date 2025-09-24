@@ -100,7 +100,7 @@ const Timer: React.FC = () => {
   };
 
   return (
-    <div className="Timer">
+    <div className="timer">
       <div className="timer-display">
         {isRunning || isFinished ? (
           <div className="countdown">
@@ -146,7 +146,7 @@ const Timer: React.FC = () => {
         >
           {isRunning ? "Pause" : "Start"}
         </button>
-        <button className="button reset" onClick={handleReset}>
+        <button className="button" onClick={handleReset}>
           Reset
         </button>
       </div>
