@@ -108,6 +108,7 @@
 		font-weight: bold;
 		animation: pulse 1s infinite;
 	}
+
 }
 
 @keyframes pulse {

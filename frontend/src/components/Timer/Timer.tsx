@@ -178,6 +178,7 @@ const Timer: React.FC<TimerProps> = ({
 			{isFinished && <div className="finished-message">Time's up!</div>}
 		</div>
 	);
+
 };
 
 export default Timer;

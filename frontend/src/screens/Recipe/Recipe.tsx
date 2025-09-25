@@ -5,6 +5,7 @@ import Logo from "../../components/Logo/Logo";
 import Button from "../../components/Button/Button";
 import ErrorComponent from "../../components/Error/Error";
 export default function Recipe() {
+
 	const { recipe, error } = useRecipe();
 	console.log(recipe);
 
